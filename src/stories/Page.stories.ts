@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/jest'
 import { within, userEvent } from '@storybook/testing-library';
 
 import { Page } from './Page';
@@ -25,5 +26,17 @@ export const LoggedIn: Story = {
       name: /Log in/i,
     });
     await userEvent.click(loginButton);
+  },
+};
+
+export const SignUp: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const signUpButton = await canvas.getByRole('button', {
+      name: /Sign up/i,
+    });
+    await userEvent.click(signUpButton);
+
+    await expect(await  canvas.getByText("Jane Doe"))
   },
 };

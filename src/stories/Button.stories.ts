@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
+import { within } from '@storybook/testing-library'
+import { expect } from '@storybook/jest'
 import { Button } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
@@ -22,6 +23,13 @@ export const Primary: Story = {
     label: 'Button',
   },
 };
+
+Primary.play = async ({ canvasElement}) => {
+  const canvas = within(canvasElement)
+  const primaryButton = await canvas.getByRole("button", {name: /Button/})
+
+  await expect(primaryButton.innerText).toBe("Button")
+}
 
 export const Secondary: Story = {
   args: {
